@@ -87,6 +87,9 @@
             } else {
                 snake.pop();
             }
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount || snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+                gameOver();
+            }
             drawGame();
         }
         setInterval(moveSnake, 150);   
@@ -110,9 +113,23 @@
         };
         document.addEventListener("keydown", keyboardHandler);
 
+        //Placing the food after its eaten
         const placeFood = () => {
             food.x = Math.floor(Math.random() * tileCount);
             food.y = Math.floor(Math.random() * tileCount);
+        };
+
+        //Game over function
+        const gameOver = () => {
+            alert("Game Over! Your score: " + score);
+            snake = [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ];
+            direction = { x: 1, y: 0 };
+            score = 0;
+            document.getElementById("info").textContent = "Score: " + score;
         };
 
     </script>
